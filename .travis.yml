@@ -14,5 +14,4 @@ script:
   - "sudo systemctl enable helix-p4dctl"
   - "sudo systemctl start helix-p4dctl"
   - "sudo /opt/perforce/sbin/configure-helix-p4d.sh -n perforce1 -p ssl:1666 -r /opt/perforce/servers/perforce1 -u super -P REinforce --unicode"
-  - "p4 set P4PORT=your.perforce.server:1666"
   - "p4 info"
