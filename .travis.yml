@@ -13,5 +13,5 @@ script:
   - "sudo apt-get install -y apt-transport-https"
   - "sudo systemctl enable helix-p4dctl"
   - "sudo systemctl start helix-p4dctl"
-  - "sudo /opt/perforce/sbin/configure-helix-p4d.sh -n perforce1 -p ssl:1666 -r /opt/perforce/servers/perforce1 -u super -P REinforce --unicode"
+  - "sudo /opt/perforce/sbin/configure-helix-p4d.sh -n perforce1 -p ssl:1666 -r /opt/perforce/servers/perforce1 -u montana -P REinforce --unicode"
   - "p4 info"
