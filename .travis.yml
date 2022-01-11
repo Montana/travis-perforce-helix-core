@@ -1,15 +1,13 @@
 language: c
 
-os:
-- linux
- - osx
+os: linux
+
  compiler:
  - clang
  - gcc
  
  before_script:
-  - >
-    if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then
+ - if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then
      wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
       echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list
      echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list
