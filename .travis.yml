@@ -1,0 +1,28 @@
+language: c
+
+os:
+- linux
+ - osx
+ compiler:
+ - clang
+ - gcc
+ 
+ before_script:
+  - >
+    if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then
+     wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
+      echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list
+     echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list
+      sudo apt-get update -qq
+      sudo apt-get install -y apt-transport-https
+      sudo apt-get install perforce-server git-lfs
+   elif [ ${TRAVIS_OS_NAME:-'linux'} = 'osx' ]; then
+      brew update
+      brew tap homebrew/binary
+      P4_SERVER_SHA=$(brew fetch --force perforce-server 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
+     P4_SHA=$(brew fetch --force perforce 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
+      sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$P4_SERVER_SHA\"/g" /usr/local/Library/Taps/homebrew/homebrew-binary/perforce-server.rb+      sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$P4_SHA\"/g" /usr/local/Library/Taps/homebrew/homebrew-binary/perforce.rb
+      brew install git-lfs perforce-server perforce
+    fi
+
+install: make configure
