@@ -13,3 +13,4 @@ script:
   - "sudo apt-get install -y apt-transport-https"
   - "sudo systemctl enable helix-p4dctl"
   - "sudo systemctl start helix-p4dctl"
+  - "p4 info"
