@@ -15,3 +15,4 @@ script:
   - "sudo systemctl start helix-p4dctl"
   - "sudo /opt/perforce/sbin/configure-helix-p4d.sh"
   - "p4 set P4PORT=your.perforce.server:1666"
+  - "p4 info"
