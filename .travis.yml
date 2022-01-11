@@ -11,7 +11,6 @@ script:
   - "sudo apt-get update -qq"
   - "sudo apt-get install helix-p4d"
   - "sudo apt-get install -y apt-transport-https"
-  - "sudo apt-get install perforce-server git-lfs"
   - "brew update"
   - "brew tap homebrew/binary"
   - "p4 revert"
