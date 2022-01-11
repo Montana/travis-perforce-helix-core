@@ -17,4 +17,5 @@ script:
   - "p4 info"
   - "p4 branches" 
   - "p4 -V" 
+  - "p4 shelve"
   - "p4 -h"
