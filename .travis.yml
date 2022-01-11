@@ -16,3 +16,5 @@ script:
   - "sudo /opt/perforce/sbin/configure-helix-p4d.sh -n perforce1 -p ssl:1666 -r /opt/perforce/servers/perforce1 -u montana -P REinforce --unicode"
   - "p4 info"
   - "p4 branches" 
+  - "p4 -V" 
+  - "p4 -h"
