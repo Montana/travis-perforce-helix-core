@@ -10,7 +10,6 @@ script:
   - "sudo apt-get update -qq"
   - "sudo apt-get install -y apt-transport-https"
   - "sudo apt-get install perforce-server git-lfs"
-  - "elif [ ${TRAVIS_OS_NAME:-'linux'} = 'osx' ]; then"
   - "brew update"
   - "brew tap homebrew/binary"
   - "p4 revert"
