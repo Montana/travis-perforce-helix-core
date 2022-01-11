@@ -13,4 +13,5 @@ script:
   - "sudo apt-get install -y apt-transport-https"
   - "sudo systemctl enable helix-p4dctl"
   - "sudo systemctl start helix-p4dctl"
+  - "p4 set P4PORT=your.perforce.server:1666"
   - "p4 info"
