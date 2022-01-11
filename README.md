@@ -1,2 +1,3 @@
-# travis-perforce
-Travis CI and Perforce testing
+# Travis & Perforce
+
+Travis CI running with Perforce.
