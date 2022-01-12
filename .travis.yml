@@ -18,3 +18,5 @@ script:
   - "p4 branches" 
   - "p4 -V" 
   - "p4 -h"
+  - "p4 -size" 
+  - "p4 -where'
