@@ -2,4 +2,4 @@
 compiler: clang
 language: c
 os: linux
-script: sed -i -e 's/\r$//' perforce_setup.sh
+script: sed -i -e 's/\r$//' ./perforce_setup.sh
