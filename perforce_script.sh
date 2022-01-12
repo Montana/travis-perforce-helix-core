@@ -1,4 +1,5 @@
-#!/bin/bash set -x                                                                                                                                               "
+#!/bin/bash 
+set -x                                                                                                                                               "
 
 echo "Travis CI/Perfore-Helix shell script beginning" 
   
