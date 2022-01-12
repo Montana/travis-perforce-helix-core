@@ -35,6 +35,13 @@ Uses [go-libp4dlog](https://github.com/rcowham/go-libp4dlog) for actual log file
   - [Monitor_metrics.sh](#monitor_metricssh)
   - [Locks](#locks)
 
+## P4 Stats Summary
+
+This is how the `p4 stats` summary looks, you can also use something like Grafana.
+
+![image](https://user-images.githubusercontent.com/20936398/149221067-3649f468-2a30-408f-8293-e670fb652dd3.png)
+
+
 ## Overview
 
 This is part of a solution consisting of the following components:
@@ -45,4 +52,3 @@ This is part of a solution consisting of the following components:
 * [node_exporter](https://github.com/prometheus/node_exporter) - Prometheus collector for basic Linux metrics
 * [windows_exporter](https://github.com/prometheus-community/windows_exporter) - Prometheus collector for Windows machines
 * [alertmanager](https://github.com/prometheus/alertmanager) - handles alerting including de-duplication etc - part of Prometheus
-
