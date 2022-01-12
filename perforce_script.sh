@@ -4,7 +4,7 @@ set +x
 
 echo $PATH
 
-function update_packages()
+function get_prerequesites()
 {
     wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
     "echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
@@ -25,7 +25,7 @@ function update_packages()
 #***********************************************************************************
 #	P4 Commands
 #***********************************************************************************
-function install_mandatories()
+function run_p4()
 {
     p4 info
     p4 branches
