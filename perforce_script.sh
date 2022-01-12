@@ -4,6 +4,7 @@ set -x
 set +x     
 set -v
 
+cmd=
 function get_prerequesites()
 {
     wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
@@ -35,3 +36,7 @@ function run_p4()
     p4 -size
 
 }
+
+get_prequesites 
+update_packages
+run_p4 
