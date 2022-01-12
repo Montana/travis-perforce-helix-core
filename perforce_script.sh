@@ -1,4 +1,4 @@
-#!/bin/bash                                                                                                                                              "
+#!/bin/bash set -x                                                                                                                                               "
 
   echo "Travis CI/Perfore-Helix shell script beginning" 
   wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -"
@@ -30,6 +30,4 @@
  "p4 -h"
    "echo" done...
  "p4 -size" 
-   "echo" done...
- "p4 -where'
    "echo" done...
