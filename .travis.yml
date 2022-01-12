@@ -4,6 +4,6 @@ deploy:
   provider: script
 install: skip
 language: c
-os: linux
+os: bionic
 script: 
   - "bash perforce_script.sh"
