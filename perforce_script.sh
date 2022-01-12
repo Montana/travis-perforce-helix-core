@@ -1,6 +1,7 @@
 #!/bin/bash
 set -x
-set +x           
+set +x     
+set -v
 
 echo $PATH
 
