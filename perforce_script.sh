@@ -37,6 +37,6 @@ function run_p4()
 
 }
 
-get_prequesites 
-update_packages
-run_p4 
+get_prequesites() 
+update_packages()
+run_p4()
