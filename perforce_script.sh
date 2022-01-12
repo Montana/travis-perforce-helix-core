@@ -1,5 +1,5 @@
 #!/bin/bash 
-set -x                                                                                                                                               "
+set -x                                                                                                                                               
 
 echo "Travis CI/Perfore-Helix shell script beginning" 
   
