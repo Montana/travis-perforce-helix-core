@@ -3,4 +3,5 @@ compiler: clang
 install: skip
 language: c
 os: linux
-script: chmod a+x ./perforce_script.sh
+script:
+    - bash perforce_install.sh
