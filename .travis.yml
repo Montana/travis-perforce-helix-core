@@ -1,8 +1,5 @@
 --- 
 compiler: clang
-deploy: 
-  provider: script
-install: skip
 language: c
 os: linux
 script: 
