@@ -1,7 +1,9 @@
 --- 
 compiler: clang
+deploy: 
+  provider: script
 install: skip
 language: c
 os: linux
-script:
-    - bash perforce_script.sh
+script: 
+  - "bash perforce_script.sh"
