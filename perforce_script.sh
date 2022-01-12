@@ -1,5 +1,8 @@
 #!/bin/bash 
-set -ex                                                                                                                                               
+
+set -x
+echo -n world
+set +x                                                                                                                                            
 
 function update_packages()
 {
