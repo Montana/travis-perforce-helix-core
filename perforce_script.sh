@@ -1,9 +1,8 @@
 #!/bin/bash
+
 set -x
 set +x     
 set -v
-
-echo $PATH
 
 function get_prerequesites()
 {
@@ -22,6 +21,7 @@ function update_packages()
     sudo systemctl enable helix-p4dctl
     sudo systemctl start helix-p4dctl
 }
+
 
 #***********************************************************************************
 #	P4 Commands
