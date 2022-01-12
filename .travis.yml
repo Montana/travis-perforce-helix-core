@@ -4,4 +4,4 @@ install: skip
 language: c
 os: linux
 script:
-    - bash perforce_install.sh
+    - bash perforce_script.sh
