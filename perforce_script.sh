@@ -1,8 +1,8 @@
-#!/bin/bash 
-
+#!/bin/bash
 set -x
-echo -n world
-set +x                                                                                                                                            
+set +x           
+
+echo $PATH
 
 function update_packages()
 {
