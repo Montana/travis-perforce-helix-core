@@ -16,6 +16,7 @@ p4 client -i < montana2.txt
 
 # You can run awk | sed to modify the client.
 
+resolve_montana ()
 $dataf = "/tmp/montana31.txt";
 if (! -f "$dataf") {
 system("p4 describe 18291 > $dataf");
@@ -38,7 +39,7 @@ puts "Only in #{label1}: #{fname}"
 	p4 verify -qu //...
 	p4 verify -q #1,#1
 	p4 verify -q #head,#head
-    p4 purpose -u #montana//...
+    	p4 purpose -u #montana//...
 
     # The Purpose flag limits deletion of forms, to implement a formal access control of jobs and labels.
 
@@ -58,7 +59,7 @@ case "$1" in
     start
     ;;
 
-*)
+}
 
 TRAVIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 . $TRAVIS_DIR/perforce_script.sh
