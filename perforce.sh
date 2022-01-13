@@ -1,6 +1,64 @@
-#!/usr/bin/bash
+#!/bin/bash
+set -ex 
+set checkjobs	
+
 # Written by Montana Mendy Jan 12th, 2022. For Travis CI.
-set -e
+
+# Exporting Perforce settings like Journal.
+
+export P4JOURNAL=/var/log/perforce/journal
+export P4LOG=/var/log/perforce/p4err
+export P4ROOT=/perforce_depot
+export P4PORT=1666
+
+p4 client -o > montana.txt
+p4 client -i < montana2.txt
+
+# You can run awk | sed to modify the client.
+
+$dataf = "/tmp/montana31.txt";
+if (! -f "$dataf") {
+system("p4 describe 18291 > $dataf");
+}
+open(IN, "<$dataf") || die "Cannot open $dataf\n";
+
+# It will change over to the "cl spec".
+
+cl spec = p4.run("montana", "-o")[0]
+cl name = cl spec[’Client’]
+cl root = cl spec[’Root’]
+puts "Ran user-client, output was ’client=#{cl name}’"
+ret = p4.run("fstat, '//#"{cl.name}/montana..."
+
+filesOnlyInLabel1 = label1filenames - label2filenames
+filesOnlyInLabel1.each { |fname|
+puts "Only in #{label1}: #{fname}"
+}
+
+	p4 verify -qu //...
+	p4 verify -q #1,#1
+	p4 verify -q #head,#head
+    p4 purpose -u #montana//...
+
+    # The Purpose flag limits deletion of forms, to implement a formal access control of jobs and labels.
+
+case "$1" in
+  start)
+    log_action_begin_msg "Starting Perforce Server"
+    daemon -u $p4user -- $p4start;
+    ;;
+
+  stop)
+    log_action_begin_msg "Stopping Perforce Server"
+    daemon -u $p4user -- $p4stop;
+    ;;
+
+  restart)
+    stop
+    start
+    ;;
+
+*)
 
 TRAVIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 . $TRAVIS_DIR/perforce_script.sh
@@ -31,6 +89,15 @@ resolve_operation ()
   echo -e "$OPERATION"
 }
 
+install_jabba_on_linux () {
+    unix_pre
+}
+
+install_jabba_on_osx () {
+    unix_pre
+    export JAVA_HOME="$HOME/.jabba/jdk/$ACTUAL_JDK/Contents/Home"
+}
+
 node_montanas_version_publish_release(){
   VERSION="$(node_load_version)"
   validate_env_variable "VERSION" "$FUNCNAME"
@@ -46,6 +113,16 @@ node_montanas_version_publish_release(){
   fi
 }
 
+container_id() {
+   __validate_input "${FUNCNAME[0]}" "$1"
+   sudo docker inspect --format='{{.Id}}' "$1" 2>/dev/null
+}
+
+container_exists() {
+   __validate_input "${FUNCNAME[0]}" "$1"
+   __isnotempty "$(container_id "$1")"
+}
+
 post_perforce_version_file(){
 
   validate_env_variable "RELEASE_BRANCH" "$FUNCNAME"
@@ -53,7 +130,7 @@ post_perforce_version_file(){
   validate_env_variable "POST_RELEASE_BRANCH" "$FUNCNAME"
   checkout_branch "${RELEASE_BRANCH}"
   VERSION="$(load_version_from_file)"
-]
+}
 
 load_version_from_file(){
   VERSION="$(head -n 1 perforce.txt)"
@@ -95,16 +172,6 @@ function get_prerequesites()
     wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
     "echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
     "echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
-}
-
-function update_packages()
-{
-    sudo apt-get install linuxbrew-wrapper
-    sudo apt-get update -qq
-    sudo apt-get install helix-p4d
-    sudo apt-get install -y apt-transport-https
-    sudo systemctl enable helix-p4dctl
-    sudo systemctl start helix-p4dctl
 }
 
 function run_p4()
