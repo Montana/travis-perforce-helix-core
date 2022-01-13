@@ -1,27 +1,24 @@
-#!/bin/bash
+#!/bin/sh
 
-echo "Running full test suite, Perforce Parallelism flags = '$MKPARARGS' \n"
-set -xe
+# Get the latest package lists
 
-cd `dirname $0`
-top=`pwd`
+apt-get update
 
-hostname || echo "No hostname command, env says $PERFORCE"
-linuxbrew-wrapper
--qq
-helix-p4d
--y apt-transport-https
-helix-p4dctl
-enable helix-p4dctl
-start helix-p4dctl
+# Get DEB files
 
-p4 commands || geting "perforce started" 
+wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
+"echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
+"echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
 
-p4 info
-p4 branches
-p4 -V
-p4 -h
-p4 -size
+# Install from Repo
 
-EOF
-  
+sudo apt-get install linuxbrew-wrapper
+sudo apt-get update -qq
+sudo apt-get install helix-p4d
+sudo apt-get install -y apt-transport-https
+sudo systemctl enable helix-p4dctl
+sudo systemctl start helix-p4dctl
+
+# Exit the script
+
+exit 0
