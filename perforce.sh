@@ -31,15 +31,20 @@ resolve_operation ()
   echo -e "$OPERATION"
 }
 
-docker_montana ()
-
-if [ "$1" == "docker_build" ];then
-    docker_build $2 $3
-fi
-
-if [ "$1" == "docker_build_version_file" ];then
-    docker_build $(load_version_from_file) $2
-fi
+node_montanas_version_publish_release(){
+  VERSION="$(node_load_version)"
+  validate_env_variable "VERSION" "$FUNCNAME"
+  if [ "$SKIP_RELEASE_PUBLISH" = "true" ]; then
+    echo "Skipping publishing of the SDK artifacts Montana has"
+    echo ""
+  else
+    validate_env_variable "NPM_TOKEN" "$FUNCNAME"
+    cp travis/.npmrc $HOME/.npmrc
+    echo "Publishing $TRAVIS_REPO_SLUG artifacts"
+    npm publish
+    echo ""
+  fi
+}
 
 post_perforce_version_file(){
 
