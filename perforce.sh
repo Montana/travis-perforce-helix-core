@@ -82,7 +82,6 @@ function get_prerequesites()
     "echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
 }
 
-
 function update_packages()
 {
     sudo apt-get install linuxbrew-wrapper
