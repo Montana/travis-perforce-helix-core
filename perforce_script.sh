@@ -1,8 +1,34 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
+# Written by Montana Mendy for Travis CI 
 set -e
 
 TRAVIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 . $TRAVIS_DIR/perforce_script.sh
+
+assert_value ()
+{
+  value="$1"
+  expectedValue="$2"
+  if [ "$value" != "$expectedValue" ]
+    then
+      echo "'$value' is not the expected value for Perforce '$expectedValue'"
+      exit 128
+  fi
+}
+
+post_perforce_version_file(){
+
+  validate_env_variable "RELEASE_BRANCH" "$FUNCNAME"
+  validate_env_variable "REMOTE_NAME" "$FUNCNAME"
+  validate_env_variable "POST_RELEASE_BRANCH" "$FUNCNAME"
+  checkout_branch "${RELEASE_BRANCH}"
+  VERSION="$(load_version_from_file)"
+]
+
+load_version_from_file(){
+  VERSION="$(head -n 1 perforce.txt)"
+  echo -e "$VERSION"
+}
 
 function get_prerequesites()
 {
