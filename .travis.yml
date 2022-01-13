@@ -1,4 +1,5 @@
 --- 
 compiler: clang
+language: c
+os: linux
 script: chmod u+x ./perforce_script.sh
-os: bionic
