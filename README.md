@@ -1,5 +1,8 @@
 # Travis & Perforce Helix-Core
 
+You're free to use my bash script to install, and make sure it passes on Travis CI. 
+
+## The Project
 
 This project integrates Perforce's Helix Core Server (p4d) with the [Prometheus](https://prometheus.io/) monitoring framework and associated tools.
 It allows real-time metrics from analysis of p4d log files and other monitoring commands to be collected by Prometheus
