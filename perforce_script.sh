@@ -1,30 +1,27 @@
 #!/bin/bash
 
-set -eu -o pipefail # fail on error and report it, debug all lines
+echo "Running full test suite, Perforce Parallelism flags = '$MKPARARGS' \n"
+set -xe
 
-sudo -n true
-test $? -eq 0 || exit 1 "you should have sudo privilege to run this script"
+cd `dirname $0`
+top=`pwd`
 
-echo installing the must-have pre-requisites
-while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
-    perl
-    zip unzip
-    exuberant-ctags
-    mutt
-    libxml-atom-perl
-    postgresql-9.6
-    libdbd-pgsql
-    curl
-    wget
-    libwww-curl-perl
+hostname || echo "No hostname command, env says $PERFORCE"
+linuxbrew-wrapper
+-qq
+helix-p4d
+-y apt-transport-https
+helix-p4dctl
+enable helix-p4dctl
+start helix-p4dctl
+
+p4 commands || geting "perforce started" 
+
+p4 info
+p4 branches
+p4 -V
+p4 -h
+p4 -size
+
 EOF
-)
-
-echo installing the nice-to-have pre-requisites
-echo you have 5 seconds to proceed ...
-echo or
-echo hit Ctrl+C to quit
-echo -e "\n"
-sleep 6
-
-sudo apt-get install -y tig
+  
