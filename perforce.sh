@@ -31,6 +31,16 @@ resolve_operation ()
   echo -e "$OPERATION"
 }
 
+docker_montana ()
+
+if [ "$1" == "docker_build" ];then
+    docker_build $2 $3
+fi
+
+if [ "$1" == "docker_build_version_file" ];then
+    docker_build $(load_version_from_file) $2
+fi
+
 post_perforce_version_file(){
 
   validate_env_variable "RELEASE_BRANCH" "$FUNCNAME"
