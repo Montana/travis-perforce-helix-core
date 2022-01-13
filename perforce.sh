@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# Written by Montana Mendy for Travis CI 
+# Written by Montana Mendy Jan 12th, 2022. For Travis CI.
 set -e
 
 TRAVIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -16,6 +16,21 @@ assert_value ()
   fi
 }
 
+resolve_operation ()
+{
+  OPERATION="build"
+  if [[ ("$TRAVIS_COMMIT_MESSAGE" == "release" ||  "$DEV_BRANCH" != "$RELEASE_BRANCH" ) && "$TRAVIS_EVENT_TYPE" != "pull_request"  && "$TRAVIS_BRANCH" == "$RELEASE_BRANCH" ]];
+   then
+     OPERATION="release"
+   else
+       if [ "$TRAVIS_EVENT_TYPE" != "pull_request" ] && [ "$TRAVIS_BRANCH" == "$DEV_BRANCH" ];
+     then
+       OPERATION="publish"
+    fi
+  fi
+  echo -e "$OPERATION"
+}
+
 post_perforce_version_file(){
 
   validate_env_variable "RELEASE_BRANCH" "$FUNCNAME"
@@ -29,6 +44,37 @@ load_version_from_file(){
   VERSION="$(head -n 1 perforce.txt)"
   echo -e "$VERSION"
 }
+
+# If you want the Docker build, I'm going to be pushing this to DockerHub once I work more of the kinks out, should just be Montana/travis-perforce.
+
+docker_build(){
+  VERSION="$1"
+  OPERATION="$2"
+
+  validate_env_variable "DOCKER_IMAGE_NAME" "$FUNCNAME"
+  validate_env_variable "VERSION" "$FUNCNAME"
+
+
+  echo "Creating Perforce image from Montana ${DOCKER_IMAGE_NAME}:${VERSION}"
+  docker build -t "${DOCKER_IMAGE_NAME}:${VERSION}" .
+
+  if [[ "$OPERATION" == "publish" || "$OPERATION" == "release"  ]];
+  then
+      echo "Building for operation ${OPERATION}..."
+      validate_env_variable "DOCKER_USERNAME" "$FUNCNAME"
+      validate_env_variable "DOCKER_PASSWORD" "$FUNCNAME"
+      echo "Login into docker..."
+      echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+
+      if [ "$OPERATION" = "publish" ]
+      then
+          TIMESTAMP="$(date +%Y%m%d%H%M)"
+          docker tag "${DOCKER_IMAGE_NAME}:${VERSION}" "${DOCKER_IMAGE_NAME}:${VERSION}-alpha"
+          docker tag "${DOCKER_IMAGE_NAME}:${VERSION}" "${DOCKER_IMAGE_NAME}:${VERSION}-alpha-${TIMESTAMP}"
+          echo "Docker pushing alpha ${TIMESTAMP}"
+          docker push "${DOCKER_IMAGE_NAME}:${VERSION}-alpha"
+          docker push "${DOCKER_IMAGE_NAME}:${VERSION}-alpha-${TIMESTAMP}"
+      fi
 
 function get_prerequesites()
 {
