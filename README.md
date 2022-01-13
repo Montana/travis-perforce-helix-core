@@ -1,4 +1,6 @@
-# Travis & Perforce Helix-Core
+[![Build Status](https://app.travis-ci.com/Montana/travis-perforce-helix-core.svg?branch=master)](https://app.travis-ci.com/Montana/travis-perforce-helix-core)
+
+# A Test Run With: Travis & Perforce Helix-Core
 
 You're free to use my bash script to install, and make sure it passes on Travis CI. 
 
