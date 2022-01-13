@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
-set -x
-set +x     
-set -v
+TRAVIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+. $TRAVIS_DIR/perforce_script.sh
 
 function get_prerequesites()
 {
@@ -22,10 +22,6 @@ function update_packages()
     sudo systemctl start helix-p4dctl
 }
 
-
-#***********************************************************************************
-#	P4 Commands
-#***********************************************************************************
 function run_p4()
 {
     p4 info
@@ -42,6 +38,7 @@ if [ "$1" == "get_prerequesites" ];then
    "echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
 fi
 
+
 if [ "$1" == "update_packages" ];then
     sudo apt-get install linuxbrew-wrapper
     sudo apt-get update -qq
@@ -50,6 +47,7 @@ if [ "$1" == "update_packages" ];then
     sudo systemctl enable helix-p4dctl
     sudo systemctl start helix-p4dctl
 fi
+
 
 if [ "$1" == "run_p4" ];then
     p4 info
