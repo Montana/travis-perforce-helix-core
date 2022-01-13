@@ -18,5 +18,6 @@ script:
   - "p4 branches" 
   - "p4 -V" 
   - "p4 -h"
+  - echo "You're now using Perforce on Travis CI!" 
   
-# The script process can be doen by the bash script I created within the repo.
+# The script process can be done by the bash script I created within the repo.
