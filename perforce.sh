@@ -11,11 +11,6 @@ export P4LOG=/var/log/perforce/p4err
 export P4ROOT=/perforce_depot
 export P4PORT=1666
 
-p4 client -o > montana.txt
-p4 client -i < montana2.txt
-
-# You can run awk | sed to modify the client.
-
 resolve_montana ()
 $dataf = "/tmp/montana31.txt";
 if (! -f "$dataf") {
