@@ -39,13 +39,11 @@ function run_p4()
 
 # -----------------------------------------------------------------------------
 
-if [ $# -ge 1 ]
-then
-  action=$1
-  shift
-
-  case ${action} in
-  
-  script)
-    do_script "$@"
-    ;;
+else
+  echo "get_prerequesite"
+  get_prerequesites
+  update_packages
+  run_p4
+fi
+ 
+exit 0
