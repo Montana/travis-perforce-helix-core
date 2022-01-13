@@ -1,49 +1,30 @@
 #!/bin/bash
 
-set -x
-set +x     
-set -v
+set -eu -o pipefail # fail on error and report it, debug all lines
 
-cmd=
-function get_prerequesites()
-{
-    wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
-    "echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
-    "echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
-}
+sudo -n true
+test $? -eq 0 || exit 1 "you should have sudo privilege to run this script"
 
+echo installing the must-have pre-requisites
+while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
+    perl
+    zip unzip
+    exuberant-ctags
+    mutt
+    libxml-atom-perl
+    postgresql-9.6
+    libdbd-pgsql
+    curl
+    wget
+    libwww-curl-perl
+EOF
+)
 
-function update_packages()
-{
-    sudo apt-get install linuxbrew-wrapper
-    sudo apt-get update -qq
-    sudo apt-get install helix-p4d
-    sudo apt-get install -y apt-transport-https
-    sudo systemctl enable helix-p4dctl
-    sudo systemctl start helix-p4dctl
-}
+echo installing the nice-to-have pre-requisites
+echo you have 5 seconds to proceed ...
+echo or
+echo hit Ctrl+C to quit
+echo -e "\n"
+sleep 6
 
-
-#***********************************************************************************
-#	P4 Commands
-#***********************************************************************************
-function run_p4()
-{
-    p4 info
-    p4 branches
-    p4 -V
-    p4 -h
-    p4 -size
-
-}
-
-# -----------------------------------------------------------------------------
-
-else
-  echo "get_prerequesite"
-  get_prerequesites
-  update_packages
-  run_p4
-fi
- 
-exit 0
+sudo apt-get install -y tig
