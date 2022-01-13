@@ -1,31 +1,61 @@
-#!/bin/sh
 
-set -x 
-set -xe 
+#!/bin/bash
 
-# Get the latest package lists
+set -x
+set +x     
+set -v
 
-sudo apt-get update
+function get_prerequesites()
+{
+    wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
+    "echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
+    "echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
+}
 
-# Get DEB files
 
-wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
-echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
-echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
+function update_packages()
+{
+    sudo apt-get install linuxbrew-wrapper
+    sudo apt-get update -qq
+    sudo apt-get install helix-p4d
+    sudo apt-get install -y apt-transport-https
+    sudo systemctl enable helix-p4dctl
+    sudo systemctl start helix-p4dctl
+}
 
-# Install from Repo
 
-sudo apt-get install linuxbrew-wrapper
-sudo apt-get update -qq
-sudo apt-get install helix-p4d
-sudo apt-get install -y apt-transport-https
-sudo systemctl enable helix-p4dctl
-sudo systemctl start helix-p4dctl
+#***********************************************************************************
+#	P4 Commands
+#***********************************************************************************
+function run_p4()
+{
+    p4 info
+    p4 branches
+    p4 -V
+    p4 -h
+    p4 -size
 
-# Run P4 
+}
 
-p4 info
+if [ "$1" == "get_prerequesites" ];then
+   wget -q https://package.perforce.com/perforce.pubkey -O - | sudo apt-key add -
+   "echo 'deb http://package.perforce.com/apt/ubuntu precise release' | sudo tee -a /etc/apt/sources.list"
+   "echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' | sudo tee -a /etc/apt/sources.list"
+fi
 
-# Exit the script
+if [ "$1" == "update_packages" ];then
+    sudo apt-get install linuxbrew-wrapper
+    sudo apt-get update -qq
+    sudo apt-get install helix-p4d
+    sudo apt-get install -y apt-transport-https
+    sudo systemctl enable helix-p4dctl
+    sudo systemctl start helix-p4dctl
+fi
 
-exit 0
+if [ "$1" == "run_p4" ];then
+    p4 info
+    p4 branches
+    p4 -V
+    p4 -h
+    p4 -size
+fi
