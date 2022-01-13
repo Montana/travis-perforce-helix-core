@@ -54,7 +54,6 @@ docker_build(){
   validate_env_variable "DOCKER_IMAGE_NAME" "$FUNCNAME"
   validate_env_variable "VERSION" "$FUNCNAME"
 
-
   echo "Creating Perforce image from Montana ${DOCKER_IMAGE_NAME}:${VERSION}"
   docker build -t "${DOCKER_IMAGE_NAME}:${VERSION}" .
 
