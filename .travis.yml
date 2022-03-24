@@ -14,6 +14,7 @@ script:
   - "sudo systemctl enable helix-p4dctl"
   - "sudo systemctl start helix-p4dctl"
   - "sudo /opt/perforce/sbin/configure-helix-p4d.sh -n perforce1 -p ssl:1666 -r /opt/perforce/servers/perforce1 -u montana -P REinforce --unicode"
+  - "p4d -M readonly" # To stop DB replication
   - "p4 info"
   - "p4 branches" 
   - "p4 -V" 
