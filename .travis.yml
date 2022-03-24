@@ -19,6 +19,7 @@ script:
   - "p4 -V" 
   - "p4 -h"
   - "p4 depots"
+  - "p4 jobs -R"
   - echo "You're now using Perforce on Travis CI!" 
   
 # The script process can be done by the bash script I created within the repo.
